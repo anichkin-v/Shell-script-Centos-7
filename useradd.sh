@@ -31,9 +31,12 @@ $user ALL=(ALL)	NOPASSWD: ALL
 EOF
 
 # Permissions
-chown $user:$user /home/$user/web /home/$user/.ssh
+chown -R $user:$user /home/$user/ /home/$user/.ssh
 chmod -R o+x /home/$user/
-chmod -R 700 /home/$user/
+chmod -R 755 /home/$user
 #gpasswd -a nginx $user
 chmod -R 700 /home/$user/.ssh
 chmod 600 /home/$user/.ssh/authorized_keys
+
+# Add to SELinux dir
+chcon -Rt httpd_sys_content_t /home/$user
