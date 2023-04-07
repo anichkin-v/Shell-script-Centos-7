@@ -39,4 +39,5 @@ chmod -R 700 /home/$user/.ssh
 chmod 600 /home/$user/.ssh/authorized_keys
 
 # Add to SELinux dir
-chcon -Rt httpd_sys_content_t /home/$user
+chcon -Rt httpd_sys_content_t /home/$user/web
+setfacl -R -m u:nginx:rwx /home/$user/web
