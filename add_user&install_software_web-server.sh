@@ -57,7 +57,7 @@ cat << EOF >/etc/sudoers.d/sudoer-users
 $user ALL=(ALL)	NOPASSWD: ALL
 EOF
 echo
-chown -R $user:$user /home/$user/web /home/$user/.ssh
+chown -R $user:$user /home/$user
 chmod -R 700 /home/$user/.ssh
 chmod 600 /home/$user/.ssh/authorized_keys
 echo
@@ -252,8 +252,6 @@ cat << EOF > $serverRoot/$router
 </html>
 EOF
 
-chown $user /home/$user -R
-chgrp $user /home/$user -R
 chsh -s /usr/bin/fish #fish shel default
 #chsh -s /bin/bash # bash shell default
 
@@ -287,8 +285,6 @@ EOF
 echo
 echo "----- END CONFIGURATION WEB SERVER ACCESS -----"
 echo
-chcon -Rt httpd_sys_content_t /home/$user
-chmod -R 755 /home/$user
 echo
 printf "*****  RUN & Configuration CERTBOT SSL *****"
 echo
@@ -333,7 +329,9 @@ fi
 echo
 echo "----- END CONFIGURATION WEB SERVER ACCESS -----"
 echo
-echo
+chown -R $user:$user /home/$user   # permissions for dir
+chcon -Rt httpd_sys_content_t /home/$user/web #selinux add web dir for home dir
+setfacl -R -m u:nginx:rwx /home/$user/web #add user nginx read in  dir /home/user/web without add nginx in group user
 echo
 read -p "*****  ADD OPEN PORT 22, 80, 443 *****" -t 5
 
