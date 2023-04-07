@@ -11,7 +11,7 @@ declare -r password="$(openssl rand -base64 13)"
 declare -r serverRoot="/home/$user/web/public"
 # setting webserver
 declare -r webserver="nginx"
-declare -r php="php82" # php-fpm 8.0
+declare -r php="php82" # php-fpm 8.2
 declare -r router="index.php"
 declare -r domain="localhost"
 declare -r timezone="UTC"
@@ -83,7 +83,7 @@ rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 # Installation
 yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
 yum -y install yum-utils
-yum-config-manager --enable remi-php82
+yum-config-manager --enable remi-$php
 yum install nginx php php-fpm php-mysqlnd php-pgsql php-gd php-imagick php-json php-opcache php-mcrypt php-curl php-mbstring php-intl php-dom php-zip php-soap postgresql$pgsql-server wget python3 mysql-community-server snapd unzip fish mc -y
 echo
 echo "----- $postgresql, $php, $timezone INSTALL ACCESS -----"
